@@ -4,4 +4,5 @@
 /tools-saxon/nbproject/genfiles.properties
 /tools-saxon/build/
 /tools-saxon/dist/
+/tools-saxon/target/
 /tools-saxon/src/org/expath/tools/saxon/version.properties
