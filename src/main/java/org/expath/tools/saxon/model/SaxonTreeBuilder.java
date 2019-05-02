@@ -11,6 +11,7 @@ package org.expath.tools.saxon.model;
 
 import net.sf.saxon.event.Builder;
 import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.expr.parser.ExplicitLocation;
 import net.sf.saxon.om.*;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.BuiltInAtomicType;
@@ -58,7 +59,7 @@ public class SaxonTreeBuilder
     {
         NodeName name = new FingerprintedQName(myPrefix, myNs, localname);
         try {
-            myBuilder.startElement(name, Untyped.getInstance(), 0, 0);
+            myBuilder.startElement(name, Untyped.getInstance(), new ExplicitLocation(null, 0, 0), 0);
         }
         catch ( XPathException ex ) {
             throw new ToolsException("Error starting element on the Saxon tree builder", ex);
@@ -72,7 +73,7 @@ public class SaxonTreeBuilder
         if ( value != null ) {
             NodeName name = new NoNamespaceName(localname);
             try {
-                myBuilder.attribute(name, BuiltInAtomicType.UNTYPED_ATOMIC, value, 0, 0);
+                myBuilder.attribute(name, BuiltInAtomicType.UNTYPED_ATOMIC, value, null, 0);
             }
             catch ( XPathException ex ) {
                 throw new ToolsException("Error creating attribute on the Saxon tree builder", ex);
