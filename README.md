@@ -1,5 +1,4 @@
-tools-saxon
-===========
+# EXPath Tools for Saxon
 
 Implementation of the tools for Saxon.
 

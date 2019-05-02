@@ -1,8 +1,3 @@
-/build/expath-tools-saxon-0.*.zip
-/build/expath-tools-saxon.jar
-/tools-saxon/nbproject/private/
-/tools-saxon/nbproject/genfiles.properties
-/tools-saxon/build/
-/tools-saxon/dist/
-/tools-saxon/target/
-/tools-saxon/src/org/expath/tools/saxon/version.properties
+target/
+*.iml
+.idea/
