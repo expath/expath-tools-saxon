@@ -19,9 +19,9 @@
     <description>Implementation of the tools for Saxon</description>
 
     <scm>
-        <connection>scm:git:git://github.com/expath/expath-tools-saxon.git</connection>
-        <developerConnection>scm:git:git://github.com/expath/expath-tools-saxon.git</developerConnection>
-        <url>http://github.com/expath/expath-tools-saxon</url>
+        <connection>scm:git:https://github.com/expath/expath-tools-saxon.git</connection>
+        <developerConnection>scm:git:https://github.com/expath/expath-tools-saxon.git</developerConnection>
+        <url>scm:git:https://github.com/expath/expath-tools-saxon.git</url>
     </scm>
 
     <dependencies>
