@@ -7,20 +7,21 @@
         <groupId>org.expath</groupId>
         <artifactId>expath-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../expath-parent/pom.xml</relativePath>
+        <relativePath/>
     </parent>
 
     <groupId>org.expath.tools</groupId>
     <artifactId>tools-saxon</artifactId>
+    <version>0.4.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>EXPath Saxon Tools</name>
     <description>Implementation of the tools for Saxon</description>
 
     <scm>
-        <connection>scm:git:git://github.com/adamretter/tools-saxon.git</connection> <!-- TODO when ready change me to scm:git:git://github.com/expath/tools-saxon.git -->
-        <developerConnection>scm:git:git://github.com/adamretter/tools-saxon.git</developerConnection> <!-- TODO when ready change me to scm:git:git://github.com/expath/tools-saxon.git -->
-        <url>http://github.com/adamretter/tools-saxon</url>
+        <connection>scm:git:git://github.com/expath/expath-tools-saxon.git</connection>
+        <developerConnection>scm:git:git://github.com/expath/expath-tools-saxon.git</developerConnection>
+        <url>http://github.com/expath/expath-tools-saxon</url>
     </scm>
 
     <dependencies>
