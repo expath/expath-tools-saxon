@@ -26,6 +26,7 @@ import org.expath.tools.ToolsException;
 import org.expath.tools.model.Element;
 import org.expath.tools.saxon.model.SaxonElement;
 import org.expath.tools.saxon.model.SaxonSequence;
+import org.expath.tools.saxon.util.SequenceIteratorFactory;
 
 /**
  * Utilities for extension functions parameters for Saxon.
@@ -287,11 +288,15 @@ public class Parameters
      * @throws XPathException If there is not such parameter or if it is not an element.
      * @return The parameter as a sequence (never return null).
      */
-    public org.expath.tools.model.Sequence asSequence(int pos, boolean optional, XPathContext ctxt)
+    public org.expath.tools.model.Sequence asSequence(final int pos, final boolean optional, final XPathContext ctxt)
             throws XPathException
     {
-        SequenceIterator it = initiate(pos, optional);
-        return new SaxonSequence(it, ctxt);
+        return new SaxonSequence(new SequenceIteratorFactory() {
+            @Override
+            public SequenceIterator newIterator() throws XPathException {
+                return initiate(pos, optional);
+            }
+        }, ctxt);
     }
 
     /**
@@ -339,14 +344,13 @@ public class Parameters
         }
         Sequence param = myParams[pos];
         SequenceIterator it = param.iterate();
-        SequenceIterator res = it.getAnother();
         if ( it.next() == null ) {
             if ( optional ) {
                 return null;
             }
             throw new XPathException("The param $" + myFormals[pos].name() + " is an empty sequence");
         }
-        return res;
+        return param.iterate();
     }
 
     private String ordinal(int pos)

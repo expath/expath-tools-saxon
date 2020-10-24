@@ -31,6 +31,7 @@ import org.expath.tools.ToolsException;
 import org.expath.tools.model.Attribute;
 import org.expath.tools.model.Element;
 import org.expath.tools.model.Sequence;
+import org.expath.tools.saxon.util.SequenceIteratorFactory;
 
 /**
  * Saxon implementation of {@link Element}, relying on {@link NodeInfo}.
@@ -145,10 +146,18 @@ public class SaxonElement
     }
 
     @Override
-    public Sequence getContent()
+    public Sequence getContent() throws ToolsException
     {
-        SequenceIterator it = myNode.iterateAxis(AxisInfo.CHILD);
-        return new SaxonSequence(it, myCtxt);
+        try {
+            return new SaxonSequence(new SequenceIteratorFactory() {
+                @Override
+                public SequenceIterator newIterator() {
+                    return myNode.iterateAxis(AxisInfo.CHILD);
+                }
+            }, myCtxt);
+        } catch (final XPathException e) {
+            throw new ToolsException(e.getMessage(), e);
+        }
     }
 
     @Override

@@ -3,7 +3,7 @@
 /*  Author:     F. Georges - H2O Consulting                                 */
 /*  Date:       2011-03-10                                                  */
 /*  Tags:                                                                   */
-/*      Copyright (c) 2011 Florent Georges (see end of file.)               */
+/*      Copyright (c) 202 Florent Georges (see end of file.)                */
 /* ------------------------------------------------------------------------ */
 
 
@@ -23,6 +23,7 @@ import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.SingletonIterator;
 import org.expath.tools.ToolsException;
 import org.expath.tools.model.Sequence;
+import org.expath.tools.saxon.util.SequenceIteratorFactory;
 import org.expath.tools.serial.SerialParameters;
 
 /**
@@ -33,9 +34,9 @@ import org.expath.tools.serial.SerialParameters;
 public class SaxonSequence
         implements Sequence
 {
-    public SaxonSequence(SequenceIterator it, XPathContext ctxt)
-    {
-        myIt = it;
+    public SaxonSequence(final SequenceIteratorFactory itFactory, XPathContext ctxt) throws XPathException {
+        myItFactory = itFactory;
+        myIt = itFactory == null ? null : itFactory.newIterator();
         myCtxt = ctxt;
     }
 
@@ -44,7 +45,7 @@ public class SaxonSequence
             throws ToolsException
     {
         try {
-            return myIt == null || myIt.getAnother().next() == null;
+            return myIt == null || myItFactory.newIterator().next() == null;
         }
         catch ( XPathException ex ) {
             throw new ToolsException("Error getting another iterator", ex);
@@ -55,15 +56,19 @@ public class SaxonSequence
     public Sequence next()
             throws ToolsException
     {
-        Item item;
         try {
-            item = myIt == null ? null : myIt.next();
+            final Item item = myIt == null ? null : myIt.next();
+
+            return new SaxonSequence(new SequenceIteratorFactory() {
+                @Override
+                public SequenceIterator newIterator() {
+                    return SingletonIterator.makeIterator(item);
+                }
+            }, myCtxt);
         }
-        catch ( XPathException ex ) {
+        catch ( final XPathException ex ) {
             throw new ToolsException("Error getting the next item in the sequence", ex);
         }
-        SequenceIterator it = SingletonIterator.makeIterator(item);
-        return new SaxonSequence(it, myCtxt);
     }
 
     @Override
@@ -211,6 +216,7 @@ public class SaxonSequence
         }
     }
 
+    private final SequenceIteratorFactory myItFactory;
     private final SequenceIterator myIt;
     private final XPathContext myCtxt;
 }

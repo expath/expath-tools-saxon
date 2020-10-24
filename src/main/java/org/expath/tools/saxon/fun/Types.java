@@ -79,18 +79,18 @@ public class Types
     public static final SequenceType SINGLE_DECIMAL  = make(SINGLE, DECIMAL);
     public static final SequenceType SINGLE_DOUBLE   = SequenceType.SINGLE_DOUBLE;
     public static final SequenceType SINGLE_FLOAT    = SequenceType.SINGLE_FLOAT;
-    public static final SequenceType SINGLE_INT      = SequenceType.SINGLE_INT;
+    public static final SequenceType SINGLE_INT      = make(SINGLE, INT);
     public static final SequenceType SINGLE_INTEGER  = SequenceType.SINGLE_INTEGER;
-    public static final SequenceType SINGLE_LONG     = SequenceType.SINGLE_LONG;
+    public static final SequenceType SINGLE_LONG     = make(SINGLE, LONG);
     public static final SequenceType SINGLE_SHORT    = SequenceType.SINGLE_SHORT;
     public static final SequenceType SINGLE_STRING   = SequenceType.SINGLE_STRING;
-    public static final SequenceType SINGLE_URI      = SequenceType.SINGLE_ANY_URI;
+    public static final SequenceType SINGLE_URI      = make(SINGLE, URI);
     // nodes
     public static final SequenceType SINGLE_NODE      = SequenceType.SINGLE_NODE;
     public static final SequenceType SINGLE_ATTRIBUTE = make(SINGLE, ATTRIBUTE);
     public static final SequenceType SINGLE_COMMENT   = make(SINGLE, COMMENT);
     public static final SequenceType SINGLE_DOCUMENT  = make(SINGLE, DOCUMENT);
-    public static final SequenceType SINGLE_ELEMENT   = SequenceType.SINGLE_ELEMENT_NODE;
+    public static final SequenceType SINGLE_ELEMENT   = make(SINGLE, ELEMENT);
     public static final SequenceType SINGLE_NAMESPACE = make(SINGLE, NAMESPACE);
     public static final SequenceType SINGLE_PI        = make(SINGLE, PI);
     public static final SequenceType SINGLE_TEXT      = make(SINGLE, TEXT);
@@ -106,18 +106,18 @@ public class Types
     public static final SequenceType OPTIONAL_DECIMAL  = SequenceType.OPTIONAL_DECIMAL;
     public static final SequenceType OPTIONAL_DOUBLE   = SequenceType.OPTIONAL_DOUBLE;
     public static final SequenceType OPTIONAL_FLOAT    = SequenceType.OPTIONAL_FLOAT;
-    public static final SequenceType OPTIONAL_INT      = SequenceType.OPTIONAL_INT;
+    public static final SequenceType OPTIONAL_INT      = make(OPTIONAL, INT);
     public static final SequenceType OPTIONAL_INTEGER  = SequenceType.OPTIONAL_INTEGER;
-    public static final SequenceType OPTIONAL_LONG     = SequenceType.OPTIONAL_LONG;
+    public static final SequenceType OPTIONAL_LONG     = make(OPTIONAL, LONG);
     public static final SequenceType OPTIONAL_SHORT    = SequenceType.OPTIONAL_SHORT;
     public static final SequenceType OPTIONAL_STRING   = SequenceType.OPTIONAL_STRING;
     public static final SequenceType OPTIONAL_URI      = SequenceType.OPTIONAL_ANY_URI;
     // nodes
     public static final SequenceType OPTIONAL_NODE      = SequenceType.OPTIONAL_NODE;
-    public static final SequenceType OPTIONAL_ATTRIBUTE = SequenceType.OPTIONAL_ATTRIBUTE_NODE;
+    public static final SequenceType OPTIONAL_ATTRIBUTE = make(OPTIONAL, ATTRIBUTE);
     public static final SequenceType OPTIONAL_COMMENT   = make(OPTIONAL, COMMENT);
     public static final SequenceType OPTIONAL_DOCUMENT  = SequenceType.OPTIONAL_DOCUMENT_NODE;
-    public static final SequenceType OPTIONAL_ELEMENT   = SequenceType.OPTIONAL_ELEMENT_NODE;
+    public static final SequenceType OPTIONAL_ELEMENT   = make(OPTIONAL, ELEMENT);
     public static final SequenceType OPTIONAL_NAMESPACE = make(OPTIONAL, NAMESPACE);
     public static final SequenceType OPTIONAL_PI        = make(OPTIONAL, PI);
     public static final SequenceType OPTIONAL_TEXT      = make(OPTIONAL, TEXT);
@@ -125,7 +125,7 @@ public class Types
     // anys
     public static final SequenceType ANY_ITEM     = SequenceType.ANY_SEQUENCE;
     // atomic types
-    public static final SequenceType ANY_BASE64   = SequenceType.BASE64_BINARY_SEQUENCE;
+    public static final SequenceType ANY_BASE64   = make(ANY, BASE64);
     public static final SequenceType ANY_BOOLEAN  = make(ANY, BOOLEAN);
     public static final SequenceType ANY_BYTE     = make(ANY, BYTE);
     public static final SequenceType ANY_DATE     = make(ANY, DATE);
@@ -144,7 +144,7 @@ public class Types
     public static final SequenceType ANY_ATTRIBUTE = make(SINGLE, ATTRIBUTE);
     public static final SequenceType ANY_COMMENT   = make(SINGLE, COMMENT);
     public static final SequenceType ANY_DOCUMENT  = make(SINGLE, DOCUMENT);
-    public static final SequenceType ANY_ELEMENT   = SequenceType.SINGLE_ELEMENT_NODE;
+    public static final SequenceType ANY_ELEMENT   = make(SINGLE, ELEMENT);
     public static final SequenceType ANY_NAMESPACE = make(SINGLE, NAMESPACE);
     public static final SequenceType ANY_PI        = make(SINGLE, PI);
     public static final SequenceType ANY_TEXT      = make(SINGLE, TEXT);
