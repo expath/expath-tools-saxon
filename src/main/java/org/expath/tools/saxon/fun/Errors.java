@@ -36,6 +36,11 @@ public class Errors
 
     /**
      * Make an XPath exception with {@code code} in the web:* namespace.
+     *
+     * @param code the XPath error code
+     * @param msg the error message
+     *
+     * @return the XPath Exception
      */
     public XPathException make(String code, String msg)
     {
@@ -47,6 +52,12 @@ public class Errors
 
     /**
      * Make an XPath exception with {@code code} in the web:* namespace.
+     *
+     * @param code the XPath error code
+     * @param msg the error message
+     * @param cause the java exception
+     *
+     * @return the XPath Exception
      */
     public XPathException make(String code, String msg, Throwable cause)
     {

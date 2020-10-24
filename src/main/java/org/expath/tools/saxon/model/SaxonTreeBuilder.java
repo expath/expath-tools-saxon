@@ -39,6 +39,10 @@ public class SaxonTreeBuilder
 
     /**
      * Provide the result in Saxon's object tools.
+     *
+     * @return the node info
+     *
+     * @throws ToolsException if the root cannot be obtained
      */
     public NodeInfo getCurrentRoot()
             throws ToolsException

@@ -183,6 +183,10 @@ public class Types
 
     /**
      * Create a list of types.
+     *
+     * @param args the types
+     *
+     * @return the sequence types
      */
     public static SequenceType[] types(SequenceType... args)
     {
@@ -191,6 +195,10 @@ public class Types
 
     /**
      * Create a QName in the namespace of the library of this object.
+     *
+     * @param local the local name
+     *
+     * @return the qualified name
      */
     public StructuredQName qname(String local)
     {
@@ -201,6 +209,11 @@ public class Types
 
     /**
      * Create an "element(ns:xxx)" type, in the namespace of the library of this object.
+     *
+     * @param local the local name
+     * @param saxon the processor
+     *
+     * @return the sequence type
      */
     public SequenceType singleElement(String local, Processor saxon)
     {
@@ -209,6 +222,11 @@ public class Types
 
     /**
      * Create an "element(ns:xxx)?" type, in the namespace of the library of this object.
+     *
+     * @param local the local name
+     * @param saxon the processor
+     *
+     * @return the sequence type
      */
     public SequenceType optionalElement(String local, Processor saxon)
     {
@@ -217,6 +235,11 @@ public class Types
 
     /**
      * Create an "element(ns:xxx)*" type, in the namespace of the library of this object.
+     *
+     * @param local the local name
+     * @param saxon the processor
+     *
+     * @return the sequence type
      */
     public SequenceType anyElement(String local, Processor saxon)
     {
@@ -225,6 +248,11 @@ public class Types
 
     /**
      * Create an "element(ns:xxx)+" type, in the namespace of the library of this object.
+     *
+     * @param local the local name
+     * @param saxon the processor
+     *
+     * @return the sequence type
      */
     public SequenceType severalElement(String local, Processor saxon)
     {
