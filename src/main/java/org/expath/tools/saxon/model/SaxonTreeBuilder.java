@@ -46,9 +46,13 @@ public class SaxonTreeBuilder
 
     /**
      * Provide the result in Saxon's object tools.
+     *
+     * @return the node info
+     *
+     * @throws ToolsException if the root cannot be obtained
      */
     public NodeInfo getCurrentRoot()
-        throws ToolsException
+            throws ToolsException
     {
         try {
             writer.writeEndDocument();
@@ -62,22 +66,22 @@ public class SaxonTreeBuilder
     }
 
     @Override
-    public void startElem(String s)
+    public void startElem(String localname)
             throws ToolsException
     {
         try {
-            writer.writeStartElement(myPrefix, s, myNs);
+            writer.writeStartElement(myPrefix, localname, myNs);
         } catch (XMLStreamException ex) {
             throw new ToolsException("Error starting element on the Saxon tree builder", ex);
         }
     }
 
     @Override
-    public void attribute(String s, CharSequence charSequence)
+    public void attribute(String localname, CharSequence value)
             throws ToolsException
     {
         try {
-            writer.writeAttribute(s, (String) charSequence);
+            writer.writeAttribute(localname, (String) value);
         } catch (XMLStreamException ex) {
             throw new ToolsException("Error creating attribute on the Saxon tree builder", ex);
         }
