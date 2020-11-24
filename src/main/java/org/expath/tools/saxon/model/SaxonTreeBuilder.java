@@ -9,16 +9,16 @@
 
 package org.expath.tools.saxon.model;
 
-import net.sf.saxon.event.Builder;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.expr.parser.ExplicitLocation;
-import net.sf.saxon.om.*;
-import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.type.BuiltInAtomicType;
-import net.sf.saxon.type.Untyped;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.BuildingStreamWriter;
+import net.sf.saxon.s9api.DocumentBuilder;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.SaxonApiException;
 import org.expath.tools.ToolsException;
 import org.expath.tools.model.TreeBuilder;
 
+import javax.xml.stream.XMLStreamException;
 
 /**
  * Implementation of {@link TreeBuilder} for Saxon.
@@ -31,88 +31,79 @@ public class SaxonTreeBuilder
     public SaxonTreeBuilder(XPathContext ctxt, String prefix, String ns)
             throws ToolsException
     {
-        myBuilder = ctxt.getController().makeBuilder();
-        myBuilder.open();
         myNs = ns;
         myPrefix = prefix;
+        try {
+            Processor processor = (Processor) ctxt.getConfiguration().getProcessor();
+            DocumentBuilder builder = processor.newDocumentBuilder();
+            writer = builder.newBuildingStreamWriter();
+            writer.writeStartDocument();
+            writer.writeNamespace(prefix, ns);
+        } catch (SaxonApiException | XMLStreamException ex) {
+            throw new ToolsException("Could not create Saxon builder", ex);
+        }
     }
 
     /**
      * Provide the result in Saxon's object tools.
-     *
-     * @return the node info
-     *
-     * @throws ToolsException if the root cannot be obtained
      */
     public NodeInfo getCurrentRoot()
-            throws ToolsException
+        throws ToolsException
     {
         try {
-            myBuilder.close();
-        }
-        catch ( XPathException ex ) {
+            writer.writeEndDocument();
+            writer.close();
+            return writer.getDocumentNode().getUnderlyingNode();
+        } catch (XMLStreamException ex) {
             throw new ToolsException("Error closing the Saxon tree builder", ex);
+        } catch (SaxonApiException ex) {
+            throw new ToolsException("Error getting root node", ex);
         }
-        return myBuilder.getCurrentRoot();
     }
 
     @Override
-    public void startElem(String localname)
+    public void startElem(String s)
             throws ToolsException
     {
-        NodeName name = new FingerprintedQName(myPrefix, myNs, localname);
         try {
-            myBuilder.startElement(name, Untyped.getInstance(), new ExplicitLocation(null, 0, 0), 0);
-        }
-        catch ( XPathException ex ) {
+            writer.writeStartElement(myPrefix, s, myNs);
+        } catch (XMLStreamException ex) {
             throw new ToolsException("Error starting element on the Saxon tree builder", ex);
         }
     }
 
     @Override
-    public void attribute(String localname, CharSequence value)
+    public void attribute(String s, CharSequence charSequence)
             throws ToolsException
     {
-        if ( value != null ) {
-            NodeName name = new NoNamespaceName(localname);
-            try {
-                myBuilder.attribute(name, BuiltInAtomicType.UNTYPED_ATOMIC, value, null, 0);
-            }
-            catch ( XPathException ex ) {
-                throw new ToolsException("Error creating attribute on the Saxon tree builder", ex);
-            }
+        try {
+            writer.writeAttribute(s, (String) charSequence);
+        } catch (XMLStreamException ex) {
+            throw new ToolsException("Error creating attribute on the Saxon tree builder", ex);
         }
     }
 
     @Override
     public void startContent()
             throws ToolsException
-    {
-        try {
-            myBuilder.startContent();
-        }
-        catch ( XPathException ex ) {
-            throw new ToolsException("Error starting content on the Saxon tree builder", ex);
-        }
-    }
+    {}
 
     @Override
     public void endElem()
             throws ToolsException
     {
         try {
-            myBuilder.endElement();
-        }
-        catch ( XPathException ex ) {
+            writer.writeEndElement();
+        } catch (XMLStreamException ex) {
             throw new ToolsException("Error ending element on the Saxon tree builder", ex);
         }
     }
 
-    private Builder myBuilder;
+    private final BuildingStreamWriter writer;
     /** The namespace used for the elements. */
-    private String myNs;
+    private final String myNs;
     /** The prefix used for the elements. */
-    private String myPrefix;
+    private final String myPrefix;
 }
 
 
