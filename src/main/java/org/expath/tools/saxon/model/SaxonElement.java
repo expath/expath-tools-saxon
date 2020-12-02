@@ -14,7 +14,6 @@ import java.util.Iterator;
 import javax.xml.namespace.QName;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.AxisInfo;
-import net.sf.saxon.om.InscopeNamespaceResolver;
 import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NamespaceResolver;
 import net.sf.saxon.om.NodeInfo;
@@ -181,7 +180,7 @@ public class SaxonElement
             throws ToolsException
     {
         try {
-            NamespaceResolver resolver = new InscopeNamespaceResolver(myNode);
+            NamespaceResolver resolver = myNode.getAllNamespaces();
             StructuredQName name = StructuredQName.fromLexicalQName(value, true, false, resolver);
             return name.toJaxpQName();
         }
