@@ -38,7 +38,6 @@ public class SaxonTreeBuilder
             DocumentBuilder builder = processor.newDocumentBuilder();
             writer = builder.newBuildingStreamWriter();
             writer.writeStartDocument();
-            writer.writeNamespace(prefix, ns);
         } catch (SaxonApiException | XMLStreamException ex) {
             throw new ToolsException("Could not create Saxon builder", ex);
         }
