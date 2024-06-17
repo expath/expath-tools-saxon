@@ -1,6 +1,6 @@
 # EXPath Tools for Saxon
 
-[![Build Status](https://travis-ci.com/expath/expath-tools-saxon.svg?branch=master)](https://travis-ci.com/expath/expath-tools-saxon)
+[![Build Status](https://github.com/expath/expath-tools-saxon/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/expath/expath-tools-saxon/actions/workflows/ci.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/org.expath.tools/tools-saxon.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.expath.tools%22%20AND%20a:%22tools-saxon%22)
 [![License](https://img.shields.io/badge/license-MPL%201.0-blue.svg)](https://opensource.org/licenses/MPL-1.0)
 
