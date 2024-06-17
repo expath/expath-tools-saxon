@@ -13,12 +13,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import javax.xml.namespace.QName;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.om.AxisInfo;
-import net.sf.saxon.om.NamePool;
-import net.sf.saxon.om.NamespaceResolver;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.om.StructuredQName;
+import net.sf.saxon.om.*;
 import net.sf.saxon.pattern.NameTest;
 import net.sf.saxon.pattern.NamespaceTest;
 import net.sf.saxon.pattern.NodeKindTest;
@@ -76,7 +71,7 @@ public class SaxonElement
     {
         // get the attribute
         NamePool pool = myNode.getConfiguration().getNamePool();
-        NodeTest pred = new NameTest(Type.ATTRIBUTE, "", local_name, pool);
+        NodeTest pred = new NameTest(Type.ATTRIBUTE, NamespaceUri.NULL, local_name, pool);
         AxisIterator attrs = myNode.iterateAxis(AxisInfo.ATTRIBUTE, pred);
         NodeInfo a = (NodeInfo) attrs.next();
         // return its string value, or null if there is no such attribute
@@ -99,7 +94,7 @@ public class SaxonElement
     public boolean hasNoNsChild()
     {
         NamePool pool = myNode.getConfiguration().getNamePool();
-        NodeTest no_ns_pred = new NamespaceTest(pool, Type.ELEMENT, "");
+        NodeTest no_ns_pred = new NamespaceTest(pool, Type.ELEMENT, NamespaceUri.NULL);
         NodeInfo next = myNode.iterateAxis(AxisInfo.CHILD, no_ns_pred).next();
         return next != null;
     }
@@ -170,7 +165,7 @@ public class SaxonElement
     public Iterable<Element> children(String ns)
     {
         NamePool pool = myNode.getConfiguration().getNamePool();
-        NodeTest pred = new NamespaceTest(pool, Type.ELEMENT, ns);
+        NodeTest pred = new NamespaceTest(pool, Type.ELEMENT, NamespaceUri.of(ns));
         AxisIterator it = myNode.iterateAxis(AxisInfo.CHILD, pred);
         return new ElemIterable(it);
     }

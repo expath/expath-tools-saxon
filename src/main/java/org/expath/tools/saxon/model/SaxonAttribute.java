@@ -10,6 +10,7 @@
 package org.expath.tools.saxon.model;
 
 import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.str.StringView;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.AtomicValue;
 import net.sf.saxon.value.BooleanValue;
@@ -56,7 +57,7 @@ public class SaxonAttribute
         String str = myNode.getStringValue();
         AtomicValue val;
         try {
-            val = BooleanValue.fromString(str).asAtomic();
+            val = BooleanValue.fromString(StringView.of(str)).asAtomic();
         }
         catch ( XPathException ex ) {
             throw new ToolsException("Error parse the attribute value as boolean", ex);

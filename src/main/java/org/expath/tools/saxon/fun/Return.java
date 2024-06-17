@@ -164,7 +164,7 @@ public class Return
         if ( dt == null ) {
             return empty();
         }
-        return new DateTimeValue(dt, tz);
+        return DateTimeValue.fromCalendar(dt, tz);
     }
 
     public static Sequence date(Date date)

@@ -11,6 +11,7 @@ package org.expath.tools.saxon.fun;
 
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.om.NamePool;
+import net.sf.saxon.om.NamespaceUri;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.pattern.AnyNodeTest;
 import net.sf.saxon.pattern.NameTest;
@@ -262,7 +263,7 @@ public class Types
     private SequenceType element(int occurrence, String local, Processor saxon)
     {
         final int      kind   = Type.ELEMENT;
-        final String   uri    = myLib.getNamespace();
+        final NamespaceUri uri = NamespaceUri.of(myLib.getNamespace());
         final NamePool pool   = saxon.getUnderlyingConfiguration().getNamePool();
         final ItemType itype  = new NameTest(kind, uri, local, pool);
         return SequenceType.makeSequenceType(itype, occurrence);
