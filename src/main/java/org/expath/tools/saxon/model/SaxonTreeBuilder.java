@@ -9,6 +9,7 @@
 
 package org.expath.tools.saxon.model;
 
+import net.sf.saxon.Configuration;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.s9api.BuildingStreamWriter;
@@ -28,13 +29,17 @@ import javax.xml.stream.XMLStreamException;
 public class SaxonTreeBuilder
         implements TreeBuilder
 {
-    public SaxonTreeBuilder(XPathContext ctxt, String prefix, String ns)
+    public SaxonTreeBuilder(XPathContext context, String prefix, String ns)
             throws ToolsException
     {
         myNs = ns;
         myPrefix = prefix;
         try {
-            Processor processor = (Processor) ctxt.getConfiguration().getProcessor();
+            final Configuration configuration = context.getConfiguration();
+            Processor processor = (Processor) configuration.getProcessor();
+            if (processor == null) {
+                processor = new Processor(configuration);
+            }
             DocumentBuilder builder = processor.newDocumentBuilder();
             writer = builder.newBuildingStreamWriter();
             writer.writeStartDocument();
