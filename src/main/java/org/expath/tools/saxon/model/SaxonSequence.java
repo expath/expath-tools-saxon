@@ -26,6 +26,8 @@ import org.expath.tools.model.Sequence;
 import org.expath.tools.saxon.util.SequenceIteratorFactory;
 import org.expath.tools.serial.SerialParameters;
 
+import static javax.xml.XMLConstants.NULL_NS_URI;
+
 /**
  * Saxon implementation of {@link Sequence}, relying on {@link SequenceIterator}.
  *
@@ -185,34 +187,34 @@ public class SaxonSequence
         }
     }
 
-    private void setOutputKey(Properties props, String name, QName value)
+    void setOutputKey(Properties props, String name, QName value)
             throws ToolsException
     {
         if ( value != null ) {
-            if ( value.getNamespaceURI() != null ) {
-                throw new ToolsException(
-                        "A QName with a non-null namespace not supported as a serialization param: {"
-                                + value.getNamespaceURI() + "}" + value.getLocalPart());
-            }
+            checkForNullNs(value);
             props.setProperty(name, value.getLocalPart());
         }
     }
 
-    private void setOutputKey(Properties props, String name, Iterable<QName> value)
+    void setOutputKey(Properties props, String name, Iterable<QName> value)
             throws ToolsException
     {
         if ( value != null ) {
             StringBuilder buf = new StringBuilder();
             for ( QName qname : value ) {
-                if ( qname.getNamespaceURI() != null ) {
-                    throw new ToolsException(
-                            "A QName with a non-null namespace not supported as a serialization param: {"
-                                    + qname.getNamespaceURI() + "}" + qname.getLocalPart());
-                }
+                checkForNullNs(qname);
                 buf.append(qname.getLocalPart());
                 buf.append(" ");
             }
             props.setProperty(name, buf.toString());
+        }
+    }
+
+    private static void checkForNullNs(final QName qname) throws ToolsException {
+        if ( qname.getNamespaceURI() != null && !NULL_NS_URI.equals(qname.getNamespaceURI()) ) {
+            throw new ToolsException(
+                "A QName with a non-null namespace not supported as a serialization param: {"
+                    + qname.getNamespaceURI() + "}" + qname.getLocalPart());
         }
     }
 
